@@ -5,6 +5,7 @@ filetype plugin indent on
 
 "autocmd vimenter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
+map <C-m> :TlistToggle<CR>
 
 function! PhpSyntaxOverride()
 	hi! def link phpDocTags  phpDefine
