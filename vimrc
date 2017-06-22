@@ -1,4 +1,4 @@
-" execute pathogen#infect()
+execute pathogen#infect()
 " source ~/DealOperator/DealOperator.vim
 
 
@@ -13,11 +13,11 @@ let mapleader=";"
 map <C-n> :NERDTreeToggle<CR>
 "map <C-m> :TlistToggle<CR>
 "noremap <C-l> :Phplint<CR>
+noremap <C-l> :!php -l %<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
-
 
 function! PhpSyntaxOverride()
 	hi! def link phpDocTags  phpDefine
@@ -29,53 +29,10 @@ augroup phpSyntaxOverride
 	autocmd FileType php call PhpSyntaxOverride()
 augroup END
 
-
 filetype off
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" Plugin 'DealOperator'
-Plugin 'nerdtree'
-Plugin 'vim-scripts/taglist.vim'
-" Plugin 'vim-scripts/FindInNERDTree'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///c/Users/aibang/.vim/bundle/nerdtree/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
 
 " 进行语法检验，颜色显示
 syntax on
