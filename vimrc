@@ -74,3 +74,5 @@ set encoding=utf8
 " 当前编辑的文件编码
 set fileencoding=utf8
 set fileencodings=uft8-bom,utf8,gbk,gb2312,big5
+
+set pastetoggle=<F11>
