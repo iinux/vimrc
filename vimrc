@@ -11,7 +11,7 @@ let mapleader=";"
 
 
 map <C-n> :NERDTreeToggle<CR>
-"map <C-m> :TlistToggle<CR>
+map <C-m> :TlistToggle<CR>
 "noremap <C-l> :Phplint<CR>
 noremap <C-l> :!php -l %<CR>
 " 设置快捷键将选中文本块复制至系统剪贴板
@@ -76,3 +76,16 @@ set fileencoding=utf8
 set fileencodings=uft8-bom,utf8,gbk,gb2312,big5
 
 set pastetoggle=<F11>
+
+" highlight Search ctermbg=yellow ctermfg=black 
+" highlight IncSearch ctermbg=black ctermfg=yellow 
+" highlight MatchParen cterm=underline ctermbg=NONE ctermfg=NONE
+
+" 当光标一段时间保持不动了，就禁用高亮
+"autocmd cursorhold * set nohlsearch
+" 当输入查找命令时，再启用高亮
+"noremap n :set hlsearch<cr>n
+"noremap N :set hlsearch<cr>N
+"noremap / :set hlsearch<cr>/
+"noremap ? :set hlsearch<cr>?
+"noremap * *:set hlsearch<cr>
