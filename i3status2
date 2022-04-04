@@ -1,0 +1,10 @@
+#!/bin/sh
+# shell script to prepend i3status with more stuff
+
+
+i3status | while :
+do
+    read line
+    temp=`sysctl -a | grep tempe | awk -F: '{print $2}'`
+    echo "$temp | $line" || exit 1
+done
