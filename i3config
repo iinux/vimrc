@@ -39,6 +39,8 @@ exec --no-startup-id nm-applet
 #https://major.io/2021/07/18/tray-icons-in-i3/
 exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 
+# feh --bg-scale /path/to/wallpaper.jpg
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
