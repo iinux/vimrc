@@ -5,6 +5,8 @@
 i3status | while :
 do
     read line
-    temp=`sysctl -a | grep tempe | awk -F: '{print $2}'`
-    echo "$temp | $line" || exit 1
+    temp=`sysctl -n hw.acpi.thermal.tz0.temperature`
+    mem=`sysctl -n vm.stats.vm.v_active_count vm.stats.vm.v_inactive_count vm.stats.vm.v_laundry_count vm.stats.vm.v_free_count vm.stats.vm.v_wire_count | xargs echo`
+    vol=`mixer vol | awk '{print $7}'`
+    echo "$mem | $temp | $vol | $line" || exit 1
 done
