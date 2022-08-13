@@ -41,6 +41,7 @@ exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 exec fcitx
 #exec copyq
 bindsym $mod+Tab workspace back_and_forth
+bindsym Mod1+Tab workspace back_and_forth
 
 #exec feh --bg-scale /path/to/wallpaper.jpg
 # ~/.fehbg
