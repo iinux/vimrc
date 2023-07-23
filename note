@@ -1,0 +1,10 @@
+apt-get install exuberant-ctags
+apt-get install cscope
+
+find `pwd` -name '*.[chS]' -print > cscope.file && cscope -Rbkq
+ctags -R
+
+按ctrl+]，可跳转到函数func定义的地方
+按ctrl+\，再按s，可展示所有引用func的地方
+
+https://juejin.cn/post/7118286362914226184
