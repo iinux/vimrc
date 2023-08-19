@@ -30,7 +30,12 @@ augroup phpSyntaxOverride
 augroup END
 
 filetype off
-filetype plugin indent on    " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'zhenyangze/vim-bitoai'
+call vundle#end()
+filetype plugin indent on
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 
