@@ -1,0 +1,108 @@
+" ============================================================
+" .vimrc  —  服务器/零依赖版本 (适合直接放在 CentOS / Linux 服务器)
+" 不依赖任何插件管理器,拿来就能用
+" ============================================================
+
+set nocompatible              " 关闭兼容模式,启用 vim 全部特性
+
+" ---------- 基础显示 ----------
+syntax on                     " 语法高亮
+set number                    " 显示行号
+set relativenumber            " 相对行号,配合 number 用混合模式,方便 5j/3k 跳转
+set cursorline                " 高亮当前行
+set ruler                     " 右下角显示光标位置
+set showcmd                   " 显示正在输入的命令
+set showmatch                 " 高亮匹配的括号
+set wrap                      " 自动换行显示(不改变文件内容)
+set scrolloff=5                " 光标上下保留 5 行,不贴边
+set laststatus=2              " 总是显示状态栏
+
+" ---------- 编码 ----------
+set encoding=utf-8
+set fileencodings=utf-8,gbk,gb2312,gb18030
+set termencoding=utf-8
+
+" ---------- 缩进 & Tab ----------
+set expandtab                 " 用空格代替 Tab
+set tabstop=4                 " Tab 显示宽度
+set softtabstop=4
+set shiftwidth=4              " 自动缩进宽度
+set autoindent
+set smartindent
+
+" ---------- 搜索 ----------
+set hlsearch                  " 高亮搜索结果
+set incsearch                 " 输入时实时搜索
+set ignorecase                " 搜索忽略大小写
+set smartcase                 " 但如果输入了大写字母,则精确匹配
+
+" ---------- 编辑体验 ----------
+set backspace=indent,eol,start " backspace 可以删除任意内容
+set mouse=a                    " 支持鼠标(远程终端里也很好用)
+set wildmenu                   " 命令行自动补全菜单
+set wildmode=list:longest,full
+set clipboard=unnamed          " 尽量与系统剪贴板同步(取决于终端是否支持)
+set updatetime=300             " 降低 CursorHold 等事件触发延迟
+set timeoutlen=500             " 按键组合等待时间,减少 <leader> 卡顿感
+
+" ---------- 文件相关 ----------
+set autoread                   " 文件在外部被修改后自动重新加载
+set noswapfile                 " 服务器上临时改配置/脚本,不需要 swap 文件
+set nobackup
+set nowritebackup
+set hidden                     " 允许在未保存的 buffer 间切换
+
+" ---------- 折叠(按需展开) ----------
+set foldmethod=indent
+set foldlevelstart=99          " 打开文件时默认不折叠
+
+" ---------- leader 键 ----------
+let mapleader = ","
+
+" ---------- 常用快捷键 ----------
+" 快速保存/退出
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+" 取消搜索高亮
+nnoremap <leader><space> :nohlsearch<CR>
+
+" 窗口分割导航 (Ctrl+h/j/k/l 直接切换窗口)
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" 上下移动按显示行走(wrap 时更符合直觉)
+nnoremap j gj
+nnoremap k gk
+
+" 括号/引号自动补全(简单版,不依赖插件)
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap { {}<Esc>i
+
+" 保留 Visual 模式下缩进后的选中状态
+vnoremap < <gv
+vnoremap > >gv
+
+" ---------- 状态栏(不依赖 airline/lightline) ----------
+set statusline=
+set statusline+=%f                     " 文件路径
+set statusline+=\ %m                   " 修改标记
+set statusline+=%=                     " 右对齐分隔
+set statusline+=[%{&fileencoding}]
+set statusline+=\ %y                   " 文件类型
+set statusline+=\ %l:%c                " 行:列
+set statusline+=\ %p%%                 " 百分比
+
+" ---------- 针对代码文件的补充 ----------
+" Java / 大括号语言:文件类型缩进插件
+filetype plugin indent on
+
+" 高亮超出 120 列的部分(适合 Java 常见行宽约定)
+highlight ColorColumn ctermbg=DarkGrey
+call matchadd('ColorColumn', '\%121v', 100)
+
+" YAML/JSON 等对空格缩进敏感的文件,tabstop 统一为 2
+autocmd FileType yaml,json,thrift setlocal tabstop=2 shiftwidth=2 softtabstop=2

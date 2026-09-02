@@ -1,96 +1,134 @@
-execute pathogen#infect()
-" source ~/DealOperator/DealOperator.vim
+" ============================================================
+" .vimrc  —  本地增强版 (macOS / 日常开发机)
+" 依赖 vim-plug 插件管理器,首次使用见文末安装说明
+" 在服务器版 (.vimrc-server) 基础上,加了文件树、模糊搜索、
+" Git 状态、状态栏美化,适合日常写 Java/脚本用
+" ============================================================
 
-
-" 定义快捷键的前缀，即<Leader>
-let mapleader=";"
-
-
-"autocmd vimenter * NERDTree
-"autocmd! BufWritePost *.php :!php -l %
-
-
-map <C-n> :NERDTreeToggle<CR>
-map <C-m> :TlistToggle<CR>
-"noremap <C-l> :Phplint<CR>
-noremap <C-l> :!php -l %<CR>
-" 设置快捷键将选中文本块复制至系统剪贴板
-vnoremap <Leader>y "+y
-" 设置快捷键将系统剪贴板内容粘贴至 vim
-nmap <Leader>p "+p
-
-function! PhpSyntaxOverride()
-	hi! def link phpDocTags  phpDefine
-	hi! def link phpDocParam phpType
-endfunction
-
-augroup phpSyntaxOverride
-	autocmd!
-	autocmd FileType php call PhpSyntaxOverride()
-augroup END
-
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'zhenyangze/vim-bitoai'
-call vundle#end()
-filetype plugin indent on
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-
-" 进行语法检验，颜色显示
-syntax on
-" 开启实时搜索功能
-set incsearch
-" 搜索时大小写不敏感
-set ignorecase
-" 关闭兼容模式
 set nocompatible
-" vim 自身命令行模式智能补全
-set wildmenu
-" 高亮度反白
-set hlsearch
-" 自动缩排
-set autoindent
-" 可显示最后一行的状态
+
+" ---------- 基础显示 ----------
+syntax on
+set number
+set relativenumber
+set cursorline
 set ruler
-" 左下角那一行的状态
-set showmode
-" 可以在每一行的最前面显示行号
-set nu
-" 自动折行
+set showcmd
+set showmatch
 set wrap
-" 将tab替换为相应数量空格
+set scrolloff=5
+set laststatus=2
+set termguicolors              " 真彩色,配合下面的配色主题
+
+" ---------- 编码 ----------
+set encoding=utf-8
+set fileencodings=utf-8,gbk,gb2312,gb18030
+
+" ---------- 缩进 & Tab ----------
 set expandtab
-set smartindent
-" 可随时用倒退键删除
-set backspace=2
-" 显示不同的底色色调
-set bg=dark
-set shiftwidth=4
-
 set tabstop=4
-" set ts=4
-
 set softtabstop=4
-" 设置内部编码为utf8
-set encoding=utf8
-" 当前编辑的文件编码
-set fileencoding=utf8
-set fileencodings=uft8-bom,utf8,gbk,gb2312,big5
+set shiftwidth=4
+set autoindent
+set smartindent
 
-set pastetoggle=<F11>
+" ---------- 搜索 ----------
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
 
-" highlight Search ctermbg=yellow ctermfg=black 
-" highlight IncSearch ctermbg=black ctermfg=yellow 
-" highlight MatchParen cterm=underline ctermbg=NONE ctermfg=NONE
+" ---------- 编辑体验 ----------
+set backspace=indent,eol,start
+" set mouse=a
+set wildmenu
+set wildmode=list:longest,full
+set clipboard=unnamed
+set updatetime=300
+set timeoutlen=500
+set autoread
+set noswapfile
+set nobackup
+set nowritebackup
+set hidden
+set foldmethod=indent
+set foldlevelstart=99
 
-" 当光标一段时间保持不动了，就禁用高亮
-"autocmd cursorhold * set nohlsearch
-" 当输入查找命令时，再启用高亮
-"noremap n :set hlsearch<cr>n
-"noremap N :set hlsearch<cr>N
-"noremap / :set hlsearch<cr>/
-"noremap ? :set hlsearch<cr>?
-"noremap * *:set hlsearch<cr>
+let mapleader = ","
+
+" ============================================================
+" 插件 (vim-plug)
+" ============================================================
+call plug#begin('~/.vim/plugged')
+
+Plug 'preservim/nerdtree'          " 文件树
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'            " 模糊查找文件/内容 (:Files :Rg)
+Plug 'airblade/vim-gitgutter'      " 左侧栏显示 git diff 标记
+Plug 'tpope/vim-fugitive'          " :Git blame / :Git diff 等
+Plug 'vim-airline/vim-airline'     " 好看的状态栏
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'          " cs"' 这种包裹符号快速修改
+Plug 'jiangmiao/auto-pairs'        " 自动补全括号引号
+Plug 'sheerun/vim-polyglot'        " 一揽子语法高亮(含 Java/Thrift/YAML)
+Plug 'morhetz/gruvbox'             " 配色主题
+Plug 'neoclide/coc.nvim'         " 代码补全 + LSP
+
+call plug#end()
+
+" ---------- 主题 ----------
+set background=dark
+silent! colorscheme gruvbox
+let g:airline_theme='gruvbox'
+let g:airline#extensions#tabline#enabled = 1   " 顶部显示 buffer 列表
+
+" ============================================================
+" 快捷键
+" ============================================================
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader><space> :nohlsearch<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nnoremap j gj
+nnoremap k gk
+
+vnoremap < <gv
+vnoremap > >gv
+
+" NERDTree
+nnoremap <leader>e :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
+
+" fzf:全局文件搜索 / 内容搜索(需要系统装了 ripgrep: brew install ripgrep)
+nnoremap <C-p> :Files<CR>
+nnoremap <leader>g :Rg<CR>
+nnoremap <leader>b :Buffers<CR>
+
+" gitgutter 逐块跳转
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+
+" ============================================================
+" 针对代码文件的补充
+" ============================================================
+filetype plugin indent on
+
+highlight ColorColumn ctermbg=DarkGrey guibg=#3c3836
+call matchadd('ColorColumn', '\%121v', 100)
+
+autocmd FileType yaml,json,thrift setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
+" ============================================================
+" 首次使用安装说明(读完可删除这段注释)
+" ============================================================
+" 1. 安装 vim-plug:
+"    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" 2. 把本文件保存为 ~/.vimrc
+" 3. 打开 vim,执行 :PlugInstall 安装所有插件
+" 4. (可选) brew install ripgrep   —— 让 :Rg 内容搜索可用
