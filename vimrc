@@ -72,7 +72,7 @@ Plug 'tpope/vim-surround'          " cs"' 这种包裹符号快速修改
 Plug 'jiangmiao/auto-pairs'        " 自动补全括号引号
 Plug 'sheerun/vim-polyglot'        " 一揽子语法高亮(含 Java/Thrift/YAML)
 Plug 'morhetz/gruvbox'             " 配色主题
-Plug 'neoclide/coc.nvim'         " 代码补全 + LSP
+"Plug 'neoclide/coc.nvim'         " 代码补全 + LSP
 
 call plug#end()
 
